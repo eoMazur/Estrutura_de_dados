@@ -96,6 +96,7 @@ void inserir_elemento_meio(struct lista *lista){
 
         for(int i = 0; i < posicao;i++){
             if(i == posicao - 1){
+
                 novo->ant = aux->ant;
                 novo->prox = aux;
                 aux->ant->prox = novo;
@@ -104,8 +105,88 @@ void inserir_elemento_meio(struct lista *lista){
             }
             else{
                 aux = aux->prox;
+
+                if(aux == NULL){
+                    printf("\nPosição invalida!!");
+                    break;
+                    break;
+                }
             }
         }
+    }
+}
+
+void remover_elemento(struct lista *lista){
+
+    if(lista->inicio == NULL){
+        printf("\nLista vazia!!");
+    }
+    
+    else{
+
+    
+    int posicao = 0;
+
+    printf("\nInforme a posição a ser removida: ");
+    scanf("%d", &posicao);
+
+    struct elemento *aux;
+    aux = lista->inicio;
+
+    for(int i = 0; i < posicao; i++){
+        if(i == posicao - 1){
+
+            //se o elemento esta na ultima posição
+            if(aux->prox == NULL && aux->ant != NULL){
+                aux->ant->prox = NULL;
+                lista->fim = aux->ant;
+
+                free(aux);
+                printf("\nElemento removido!!");
+            }
+
+            //se é o unico elemento
+            else if(aux->ant == NULL && aux->prox == NULL){
+                lista->inicio = NULL;
+                lista->fim = NULL;
+
+                free(aux);
+            }
+
+            
+            //se o elemento esta pelo meio
+            else if(aux->ant != NULL && aux->prox != NULL){
+                aux->prox->ant = aux->ant;
+                aux->ant->prox = aux->prox;
+
+                free(aux);
+
+                printf("\nElemento removido!!");
+            }
+
+            //se é o primeiro mas não o unico elemento
+            else if(aux->ant == NULL && aux->prox != NULL){
+                aux->prox->ant = NULL;
+
+                lista->inicio = aux->prox;
+
+                free(aux);
+
+                printf("\nElemento removido!!");
+
+            }
+        }
+        
+        aux = aux->prox;
+        if(aux == NULL){
+            printf("\nPosição invalida!!");
+            break;
+            break;
+        }
+    }
+
+
+
     }
 }
 
@@ -138,7 +219,7 @@ int main(void){
     while(1){
         int opcao = 0;
 
-        printf("\nInforme a opção:\n1 - Inserir elemento no inicio: \n2 - Inserir elemento no meio\n3 - Inserir elemento no fim\n4 - Imprimir lista\n");
+        printf("\nInforme a opção:\n1 - Inserir elemento no inicio: \n2 - Inserir elemento no meio\n3 - Inserir elemento no fim\n4 - Imprimir lista\n5 - Remover elemento\n");
         scanf("%d", &opcao);
 
         switch (opcao){
@@ -157,6 +238,11 @@ int main(void){
 
             case 4:
                 imprime_lista(&lista);
+                break;
+
+            case 5:
+                remover_elemento(&lista);
+                break;
 
             default:
                 break;

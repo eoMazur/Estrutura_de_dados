@@ -190,6 +190,61 @@ void remover_elemento(struct lista *lista){
     }
 }
 
+void retona_valores_maior_media_menor(struct lista *lista){
+    struct elemento *aux = lista->inicio;
+
+    int maior = aux->num;
+
+    do{
+        if(aux->prox != NULL){
+            if(aux->num < aux->prox->num){
+                if(maior < aux->prox->num){
+                    maior = aux->prox->num;
+                }
+            }
+        }
+        aux = aux->prox;
+    }while(aux != NULL);
+
+    printf("\nO maior elemento é: %d", maior);
+    
+
+    aux = lista->inicio;
+    int media = 0, count = 0;
+
+
+    do{
+        media = media + aux->num;
+        count++;
+
+        aux = aux->prox;
+    }while(aux != NULL);
+
+    media = media / count;
+
+    printf("\nA média é: %d", media);
+
+    aux = lista->inicio;
+    int menor = aux->num;
+
+
+    do{
+        if(aux->prox != NULL){
+            if(aux->num > aux->prox->num){
+                if(maior > aux->prox->num){
+                    menor = aux->prox->num;
+                }
+            }
+        }
+        aux = aux->prox;
+    }while(aux != NULL);
+
+    printf("\nO menor elemento é: %d", menor);
+
+
+
+}
+
 void imprime_lista(struct lista *lista){
     if(lista->inicio == NULL){
         printf("\nLista vazia!!");
@@ -219,7 +274,7 @@ int main(void){
     while(1){
         int opcao = 0;
 
-        printf("\nInforme a opção:\n1 - Inserir elemento no inicio: \n2 - Inserir elemento no meio\n3 - Inserir elemento no fim\n4 - Imprimir lista\n5 - Remover elemento\n");
+        printf("\nInforme a opção:\n1 - Inserir elemento no inicio: \n2 - Inserir elemento no meio\n3 - Inserir elemento no fim\n4 - Imprimir lista\n5 - Remover elemento\n6 - Retorna maior, média e menor\n");
         scanf("%d", &opcao);
 
         switch (opcao){
@@ -242,6 +297,10 @@ int main(void){
 
             case 5:
                 remover_elemento(&lista);
+                break;
+
+            case 6:
+                retona_valores_maior_media_menor(&lista);
                 break;
 
             default:

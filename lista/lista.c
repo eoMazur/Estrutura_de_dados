@@ -265,6 +265,32 @@ void imprime_lista(struct lista *lista){
     }
 }
 
+void multiplica_elementos(struct lista *lista){
+
+    struct elemento *aux;
+
+    aux = lista->inicio;
+    int total = aux->num;
+
+    do{
+        if(aux->prox != NULL){
+
+        total = total * aux->prox->num;
+
+        aux = aux->prox;
+    }
+
+    else{
+        break;
+        break;
+    }
+    }while(aux != NULL);
+    
+
+    printf("\nO valor total é: %d", total);
+
+}
+
 int main(void){
 
     struct lista lista;
@@ -274,7 +300,9 @@ int main(void){
     while(1){
         int opcao = 0;
 
-        printf("\nInforme a opção:\n1 - Inserir elemento no inicio: \n2 - Inserir elemento no meio\n3 - Inserir elemento no fim\n4 - Imprimir lista\n5 - Remover elemento\n6 - Retorna maior, média e menor\n");
+        printf("\nInforme a opção:\n1 - Inserir elemento no inicio: \n2 - Inserir elemento no meio\n");
+        printf("3 - Inserir elemento no fim\n4 - Imprimir lista\n5 - Remover elemento\n6 - Retorna maior, média e menor\n");
+        printf("7 - Multiplica elementos:\n");
         scanf("%d", &opcao);
 
         switch (opcao){
@@ -303,6 +331,9 @@ int main(void){
                 retona_valores_maior_media_menor(&lista);
                 break;
 
+            case 7:
+                multiplica_elementos(&lista);
+                break;
             default:
                 break;
                 break;

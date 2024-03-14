@@ -191,57 +191,66 @@ void remover_elemento(struct lista *lista){
 }
 
 void retona_valores_maior_media_menor(struct lista *lista){
-    struct elemento *aux = lista->inicio;
+    if(lista->inicio == NULL){
+        printf("\nLista vazia!!");
+    }
 
-    int maior = aux->num;
+    else if(lista->inicio != NULL){
+        struct elemento *aux = lista->inicio;
 
-    do{
-        if(aux->prox != NULL){
-            if(aux->num < aux->prox->num){
-                if(maior < aux->prox->num){
-                    maior = aux->prox->num;
+        int maior = aux->num;
+
+        do{
+            if(aux->prox != NULL){
+                if(aux->num < aux->prox->num){
+                    if(maior < aux->prox->num){
+                        maior = aux->prox->num;
+                    }
                 }
             }
-        }
-        aux = aux->prox;
-    }while(aux != NULL);
+            aux = aux->prox;
+       }while(aux != NULL);
 
-    printf("\nO maior elemento é: %d", maior);
+        printf("\nO maior elemento é: %d", maior);
     
 
-    aux = lista->inicio;
-    int media = 0, count = 0;
+        aux = lista->inicio;
+         int media = 0, count = 0;
 
 
-    do{
-        media = media + aux->num;
-        count++;
+         do{
+             media = media + aux->num;
+             count++;
 
-        aux = aux->prox;
-    }while(aux != NULL);
+             aux = aux->prox;
+         }while(aux != NULL);
 
-    media = media / count;
+        media = media / count;
 
-    printf("\nA média é: %d", media);
+         printf("\nA média é: %d", media);
 
-    aux = lista->inicio;
-    int menor = aux->num;
+        aux = lista->inicio;
+        int menor = aux->num;
 
 
-    do{
-        if(aux->prox != NULL){
-            if(aux->num > aux->prox->num){
-                if(maior > aux->prox->num){
-                    menor = aux->prox->num;
+        do{
+            if(aux->prox != NULL){
+                if(aux->num > aux->prox->num){
+                    if(maior > aux->prox->num){
+                        menor = aux->prox->num;
+                    }
                 }
             }
-        }
-        aux = aux->prox;
-    }while(aux != NULL);
+            aux = aux->prox;
+        }while(aux != NULL);
 
-    printf("\nO menor elemento é: %d", menor);
+        printf("\nO menor elemento é: %d", menor);
 
+    }
 
+    else{
+        printf("\nErro de leitura: ");
+    }
 
 }
 
@@ -267,27 +276,39 @@ void imprime_lista(struct lista *lista){
 
 void multiplica_elementos(struct lista *lista){
 
-    struct elemento *aux;
+    if(lista->inicio == NULL){
+        printf("\nLista vazia!!");
+    }
 
-    aux = lista->inicio;
-    int total = aux->num;
+    else if(lista->inicio != NULL){
+        struct elemento *aux;
 
-    do{
-        if(aux->prox != NULL){
+        aux = lista->inicio;
+        int total = aux->num;
 
-        total = total * aux->prox->num;
+        do{
+            if(aux->prox != NULL){
 
-        aux = aux->prox;
+            total = total * aux->prox->num;
+
+            aux = aux->prox;
+        }
+
+        else{
+            break;
+            break;
+        }
+        }while(aux != NULL);
+    
+
+        printf("\nO valor total é: %d", total);
     }
 
     else{
-        break;
-        break;
+        printf("\nErro de leitura");
     }
-    }while(aux != NULL);
-    
 
-    printf("\nO valor total é: %d", total);
+    
 
 }
 

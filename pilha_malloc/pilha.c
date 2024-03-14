@@ -107,6 +107,78 @@ void desempilha(struct pilha *pilha){
     }
 }
 
+void desempilha_tudo(struct pilha *pilha){
+    if(pilha->topo == NULL){
+        printf("\nPilha vazia!!");
+    }
+    
+    else if(pilha->topo != NULL){
+        struct elemento *aux;
+        
+        aux = pilha->topo;
+        
+        do{
+            pilha->topo = aux->ant;
+            free(aux);
+            
+            aux = pilha->topo;
+        }while(aux != NULL);
+        
+        
+        printf("\nToda a pilha foi apagada!!");
+    }
+    
+    
+    else{
+        printf("\nErro na leitura: ");
+    }
+}
+
+void Fibonacci(struct pilha *pilha){
+    int n;
+
+    printf("\nInforme o valor: ");
+    scanf("%d", &n);
+
+    //struct elemento *aux = pilha->topo;
+
+    int anterior = 0, proximo = 1, soma = 0;
+    
+        struct elemento *elemento0 = (struct elemento *) malloc(sizeof(struct elemento));
+        elemento0->num = 0;
+        elemento0->ant = pilha->topo;
+
+        pilha->topo = elemento0;
+        
+        struct elemento *elemento1 = (struct elemento *) malloc(sizeof(struct elemento));
+        elemento1->num = 1;
+        elemento1->ant = pilha->topo;
+
+        pilha->topo = elemento1;
+
+    for(int i = 2; i < n; i++){
+            
+        
+        soma = anterior + proximo;
+
+        anterior = proximo;
+        proximo = soma;
+
+        struct elemento *novo = (struct elemento *) malloc(sizeof(struct elemento));
+        novo->num = soma;
+        novo->ant = pilha->topo;
+
+        pilha->topo = novo;
+        
+
+    }
+
+    printf("\nUltimo número de fibonnaci: %d", soma);
+
+}
+
+
+
 int main(void){
     struct pilha pilha;
 
@@ -118,7 +190,9 @@ int main(void){
         printf("\nEscolha a operação: ");
         printf("\n1 - Empilhar: ");
         printf("\n2 - Desempilhar: ");
-        printf("\n3 - Imprimir pilha: ");
+        printf("\n3 - Desempilha toda a pilha");
+        printf("\n4 - Imprimir pilha: ");
+        printf("\n5 - Fibonacci: ");
         printf("\n");
 
         scanf("%d", &opcao);
@@ -132,9 +206,17 @@ int main(void){
         case 2:
             desempilha(&pilha);
             break;
-
+            
         case 3:
+            desempilha_tudo(&pilha);
+            break;
+
+        case 4:
             imprime_pilha(&pilha);
+            break;
+            
+        case 5:
+            Fibonacci(&pilha);
             break;
         
         default:
@@ -144,3 +226,6 @@ int main(void){
 
     }
 }
+
+
+//Desenvolva um programa que armazene n valores da sequência de Fibonacci em uma pilha.

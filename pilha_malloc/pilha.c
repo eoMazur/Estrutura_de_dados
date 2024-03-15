@@ -11,6 +11,11 @@ struct pilha{
     
 };
 
+struct fila{
+    struct elemento *inicio;
+    struct elemento *fim;
+};
+
 void cria_pilha(struct pilha *pilha){
     pilha = (struct pilha *) malloc(sizeof(struct elemento));
 
@@ -26,10 +31,10 @@ void empilha(struct pilha *pilha){
 
     printf("\nInforme o valor: ");
     scanf("%d", &novo->num);
+    novo->ant = NULL;
 
     if(pilha->topo == NULL){
         pilha->topo = novo;
-        novo->ant = NULL;
 
         printf("\nElemento empilhado: ");
     }
@@ -177,12 +182,88 @@ void Fibonacci(struct pilha *pilha){
 
 }
 
+void cria_fila(struct fila *fila){
+    
+    fila->inicio = NULL;
+    fila->fim = NULL;
+}
+
+void adiciona_elemento_fila(struct fila *fila){
+    struct elemento *novo = (struct elemento *) malloc(sizeof(struct elemento));
+    
+    printf("\nInforme o valor: ");
+    scanf("%d", &novo->num);
+    novo->ant = NULL;
+    
+    if(fila->inicio == NULL){
+        fila->inicio = novo;
+        fila->fim = novo;
+    }
+    
+    else if(fila->inicio != NULL){
+        fila->fim->ant = novo;
+        fila->fim = novo;
+    }
+}
+
+void imprime_fila(struct fila *fila){
+    if(fila->inicio == NULL){
+        printf("\nFila vazia!!");
+    }
+    
+    else if(fila->inicio != NULL){
+        struct elemento *aux;
+        aux = fila->inicio;
+        int i = 1;
+        
+        do{
+            printf("\n%dº valor: %d", i, aux->num);
+            i++;
+            aux = aux->ant;
+        }while(aux != NULL);
+    }
+    
+    else{
+        printf("\nErro na leitura!!");
+    }
+}
+
+void compara_pilha_fila(struct pilha *pilha, struct fila *fila){
+    if(pilha->topo == NULL || fila->inicio == NULL){
+        printf("\nPilha ou fila vazia!!");
+    }
+    
+    else if(pilha->topo != NULL || fila->inicio != NULL){
+        struct elemento *aux_pilha = pilha->topo;
+        struct elemento *aux_fila = fila->inicio;
+        
+        int contador = 0;
+        
+        do{
+            if(aux_pilha->num == aux_fila->num){
+                printf("\nElementos iguais encontrados!!");
+                contador++;
+            }
+            
+            aux_pilha = aux_pilha->ant;
+            aux_fila = aux_fila->ant;
+            
+            
+        }while(aux_pilha != NULL && aux_fila != NULL);
+        
+        printf("\n%d elementos iguais encontrados!!", contador);
+    }
+}
+
 
 
 int main(void){
+    
     struct pilha pilha;
-
     cria_pilha(&pilha);
+    
+    struct fila fila;
+    cria_fila(&fila);
 
     int opcao;
 
@@ -193,6 +274,9 @@ int main(void){
         printf("\n3 - Desempilha toda a pilha");
         printf("\n4 - Imprimir pilha: ");
         printf("\n5 - Fibonacci: ");
+        printf("\n6 - Adiciona elemento na fila: ");
+        printf("\n7 - Imprime fila: ");
+        printf("\n8 - Compara pilha com fila");
         printf("\n");
 
         scanf("%d", &opcao);
@@ -217,6 +301,18 @@ int main(void){
             
         case 5:
             Fibonacci(&pilha);
+            break;
+            
+        case 6:
+            adiciona_elemento_fila(&fila);
+            break;
+            
+        case 7:
+            imprime_fila(&fila);
+            break;
+            
+        case 8:
+            compara_pilha_fila(&pilha, &fila);
             break;
         
         default:

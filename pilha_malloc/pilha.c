@@ -32,6 +32,7 @@ void empilha(struct pilha *pilha){
     printf("\nInforme o valor: ");
     scanf("%d", &novo->num);
     novo->ant = NULL;
+    
 
     if(pilha->topo == NULL){
         pilha->topo = novo;
@@ -148,20 +149,33 @@ void Fibonacci(struct pilha *pilha){
     //struct elemento *aux = pilha->topo;
 
     int anterior = 0, proximo = 1, soma = 0;
-    
+
+    if(n == 2 || n > 2){
+        struct elemento *elemento1 = (struct elemento *) malloc(sizeof(struct elemento));
+        elemento1->num = 0;
+        elemento1->ant = pilha->topo;
+
+        pilha->topo = elemento1;
+
+        struct elemento *elemento2 = (struct elemento *) malloc(sizeof(struct elemento));
+        elemento2->num = 1;
+        elemento2->ant = pilha->topo;
+
+        pilha->topo = elemento2;
+    }
+
+    else if (n == 1){
         struct elemento *elemento0 = (struct elemento *) malloc(sizeof(struct elemento));
         elemento0->num = 0;
         elemento0->ant = pilha->topo;
 
         pilha->topo = elemento0;
+    }
+    
         
-        struct elemento *elemento1 = (struct elemento *) malloc(sizeof(struct elemento));
-        elemento1->num = 1;
-        elemento1->ant = pilha->topo;
 
-        pilha->topo = elemento1;
-
-    for(int i = 2; i < n; i++){
+     if(n > 2){
+        for(int i = 2; i < n; i++){
             
         
         soma = anterior + proximo;
@@ -179,6 +193,9 @@ void Fibonacci(struct pilha *pilha){
     }
 
     printf("\nUltimo número de fibonnaci: %d", soma);
+     }
+        
+
 
 }
 
@@ -256,6 +273,117 @@ void compara_pilha_fila(struct pilha *pilha, struct fila *fila){
 }
 
 
+void compara_tamanhos_diferentes(struct pilha *pilha, struct fila *fila){
+
+    if(pilha->topo == NULL || fila->inicio == NULL){
+        printf("\nPilha ou fila vazia!!");
+    }
+
+
+    else if(pilha->topo != NULL || fila->inicio != NULL){
+            struct elemento *aux_pilha;
+            struct elemento *aux_fila;
+
+            aux_pilha = pilha->topo;
+            aux_fila = fila->inicio;
+
+            int contador_pilha, contador_fila;
+            contador_pilha = 0;
+            contador_fila = 0;
+
+
+            //calcula o tamanho da pilha
+            do{
+                contador_pilha++;
+                aux_pilha = aux_pilha->ant;
+            }while(aux_pilha != NULL);
+
+            printf("\nTamanho da pilha: %d", contador_pilha);
+
+            //calcula o tamanho da fila
+            do{
+                contador_fila++;
+                aux_fila = aux_fila->ant;
+            }while(aux_fila != NULL);
+
+            printf("\nTamanho da fila: %d", contador_fila);
+
+            int iguais = 0;
+
+
+            //se a pilha for maior: ele pega um elemento da fila e compara com cada
+            // um da pilha, ate ter comparado cada elemento da fila na pilha
+            if(contador_pilha > contador_fila){
+                aux_fila = fila->inicio;
+                
+                for(int i = 0; i < contador_fila; i++){
+                    aux_pilha = pilha->topo;
+                    for(int j = 0; j < contador_pilha; j++){
+                        
+                        
+                        if(aux_fila->num == aux_pilha->num){
+                            printf("\nElementos iguais encontrados!!");
+                            iguais++;
+
+
+                            break;
+                        }
+                        else if(aux_fila->num != aux_pilha->num){
+                                aux_pilha = aux_pilha->ant;
+                        }
+                         
+                       
+                    }
+                    
+                    aux_fila = aux_fila->ant;
+                }
+
+                printf("\nPossui %d elementos iguais!!", iguais);
+            }
+
+
+            //se a fila for maior que a pilha ele compara cada elemento da pilha 
+            //na fila, ate ter comparado cada elemento da pilha
+            else if(contador_pilha < contador_fila){
+                aux_fila = fila->inicio;
+                aux_pilha = pilha->topo;
+
+                for(int i = 0; i < contador_pilha; i++){
+                    aux_fila = fila->inicio;
+
+                    for(int j = 0; j < contador_fila; i++){
+
+                        
+                        if(aux_pilha->num == aux_fila->num){
+                            iguais++;
+
+                            break;
+
+                        }
+
+                        else if(aux_pilha->num != aux_fila->num){
+                            aux_fila = aux_fila->ant;
+                        }
+                        
+                        
+                    }
+
+                    aux_pilha = aux_pilha->ant;
+                }
+
+                printf("\nPossui %d elementos iguais!!", iguais);
+            }
+
+
+
+            else{
+                printf("\nErro na execução!!");
+            }
+
+    }
+
+}
+
 
 int main(void){
     
@@ -276,7 +404,8 @@ int main(void){
         printf("\n5 - Fibonacci: ");
         printf("\n6 - Adiciona elemento na fila: ");
         printf("\n7 - Imprime fila: ");
-        printf("\n8 - Compara pilha com fila");
+        printf("\n8 - Compara pilha com fila: ");
+        printf("\n9 - Compara tamanhos diferentes: ");
         printf("\n");
 
         scanf("%d", &opcao);
@@ -313,6 +442,10 @@ int main(void){
             
         case 8:
             compara_pilha_fila(&pilha, &fila);
+            break;
+
+        case 9:
+            compara_tamanhos_diferentes(&pilha, &fila);
             break;
         
         default:

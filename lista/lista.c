@@ -34,11 +34,13 @@ void inserir_elemento_fim(struct lista *lista){
     novo->prox = NULL;
     novo->ant = NULL;
 
+    //Caso for o primeiro elemento da lista
     if(lista->inicio == NULL){
         lista->inicio = novo;
         lista->fim = novo;
     }
 
+    //Caso não seja o primeiro
     else{
         novo->ant = lista->fim;
         lista->fim->prox = novo;
@@ -56,12 +58,14 @@ void inserir_elemento_inicio(struct lista *lista){
     novo->prox = NULL;
     novo->ant = NULL;
 
+    //Caso seja o primeiro elemento da lista
     if(lista->inicio == NULL){
         lista->inicio = novo;
         lista->fim = novo;
 
     }
 
+    //Caso não seja o primeiro elemento
     else{
         novo->prox = lista->inicio;
         lista->inicio->ant = novo;
@@ -79,11 +83,13 @@ void inserir_elemento_meio(struct lista *lista){
     novo->prox = NULL;
     novo->ant = NULL;
 
+    //Caso seja o primeiro elemento
     if(lista->inicio == NULL){
         lista->inicio = novo;
         lista->fim = novo;
     }
 
+    //Caso exista um ou mais elementos
     else{
         int posicao = 0;
 
@@ -97,31 +103,34 @@ void inserir_elemento_meio(struct lista *lista){
         for(int i = 0; i < posicao;i++){
             if(i == posicao - 1){
 
+                //IF para verificar se o elemento não está na primeira posição;
                 if(aux->ant != NULL){
                     novo->ant = aux->ant;
-                }
-                
-                novo->prox = aux;
-
-                if(aux->ant != NULL){
                     aux->ant->prox = novo;
-                    
                 }
+                //Se o elemento estiver na primeira posição
+                //Atribui ele como o primeiro elemento
                 else
                 {
                     lista->inicio = novo;
                 }
                 
+                novo->prox = aux;
                 aux->ant = novo;
 
 
 
             }
+            //Estrutura de repetição para chegar na posição desejada
             else{
                 aux = aux->prox;
 
+
+                //Caso a posição desejada seja maior que o tamanho da função
+                //Ele imprime posição invalida e quebra o for
                 if(aux == NULL){
                     printf("\nPosição invalida!!");
+                    break;
                     break;
                     break;
                 }
@@ -132,6 +141,7 @@ void inserir_elemento_meio(struct lista *lista){
 
 void remover_elemento(struct lista *lista){
 
+    //Caso a lista esteja vazia
     if(lista->inicio == NULL){
         printf("\nLista vazia!!");
     }
@@ -147,6 +157,8 @@ void remover_elemento(struct lista *lista){
     struct elemento *aux;
     aux = lista->inicio;
 
+    //Estrutura de repetição para chegar na posição desejada
+    //E cai em um IF dependendo da posição do elemento, se é o primeiro, ultimo, etc.
     for(int i = 0; i < posicao; i++){
         if(i == posicao - 1){
 
@@ -204,7 +216,10 @@ void remover_elemento(struct lista *lista){
     }
 }
 
+//Função de exercício do professor
 void retona_valores_maior_media_menor(struct lista *lista){
+
+    //Verifica se a lista está vazia.
     if(lista->inicio == NULL){
         printf("\nLista vazia!!");
     }
@@ -214,6 +229,7 @@ void retona_valores_maior_media_menor(struct lista *lista){
 
         int maior = aux->num;
 
+        //Busca o maior elemento.
         do{
             if(aux->prox != NULL){
                 if(aux->num < aux->prox->num){
@@ -227,11 +243,11 @@ void retona_valores_maior_media_menor(struct lista *lista){
 
         printf("\nO maior elemento é: %d", maior);
     
-
+        //Volta a variavel aux para o inicio da lista
         aux = lista->inicio;
          int media = 0, count = 0;
 
-
+        //Calcula a soma de todos os elementos
          do{
              media = media + aux->num;
              count++;
@@ -239,14 +255,17 @@ void retona_valores_maior_media_menor(struct lista *lista){
              aux = aux->prox;
          }while(aux != NULL);
 
+        //Calcula a media
         media = media / count;
 
          printf("\nA média é: %d", media);
 
+        //Volta a variavel aux para o inicio da lista
         aux = lista->inicio;
         int menor = aux->num;
 
 
+        //Busca o menor elemento na lista
         do{
             if(aux->prox != NULL){
                 if(aux->num > aux->prox->num){
@@ -300,6 +319,8 @@ void multiplica_elementos(struct lista *lista){
         aux = lista->inicio;
         long total = aux->num;
 
+
+        //Roda o calculo da multiplicação de todos os valores
         do{
             if(aux->prox != NULL){
 
@@ -308,6 +329,7 @@ void multiplica_elementos(struct lista *lista){
             aux = aux->prox;
         }
 
+        //Caso o aux->prox seja Nulo, roda o else para não dar erro.
         else{
             break;
             break;
@@ -318,6 +340,7 @@ void multiplica_elementos(struct lista *lista){
         printf("\nO valor total é: %d", total);
     }
 
+    //Prevenção de execeção 
     else{
         printf("\nErro de leitura");
     }

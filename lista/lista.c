@@ -97,10 +97,24 @@ void inserir_elemento_meio(struct lista *lista){
         for(int i = 0; i < posicao;i++){
             if(i == posicao - 1){
 
-                novo->ant = aux->ant;
+                if(aux->ant != NULL){
+                    novo->ant = aux->ant;
+                }
+                
                 novo->prox = aux;
-                aux->ant->prox = novo;
+
+                if(aux->ant != NULL){
+                    aux->ant->prox = novo;
+                    
+                }
+                else
+                {
+                    lista->inicio = novo;
+                }
+                
                 aux->ant = novo;
+
+
 
             }
             else{
@@ -284,7 +298,7 @@ void multiplica_elementos(struct lista *lista){
         struct elemento *aux;
 
         aux = lista->inicio;
-        int total = aux->num;
+        long total = aux->num;
 
         do{
             if(aux->prox != NULL){

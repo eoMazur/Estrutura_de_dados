@@ -73,6 +73,8 @@ void inserir_elemento_inicio(struct lista *lista){
     }
 }
 
+//Essa função mais insere elementos em qualquer posição da lista do que somente
+//no meio.
 void inserir_elemento_meio(struct lista *lista){
 
     struct elemento *novo = (struct elemento *) malloc(sizeof(struct elemento));
@@ -84,12 +86,17 @@ void inserir_elemento_meio(struct lista *lista){
     novo->ant = NULL;
 
     //Caso seja o primeiro elemento
+    //Irá adicionar na primeira posição
     if(lista->inicio == NULL){
         lista->inicio = novo;
         lista->fim = novo;
     }
 
     //Caso exista um ou mais elementos
+    //Irá para opção de escolher a posição desejada
+    //Sendo que, se for selecionada uma opção maior que o 
+    //tamanho da lista, a função retorna um print dizendo que a posição é
+    //invalida
     else{
         int posicao = 0;
 
@@ -100,14 +107,16 @@ void inserir_elemento_meio(struct lista *lista){
 
         aux = lista->inicio;
 
-        for(int i = 0; i < posicao;i++){
-            if(i == posicao - 1){
+        if(posicao > 0){
+             for(int i = 0; i < posicao;i++){
+                if(i == posicao - 1){
 
-                //IF para verificar se o elemento não está na primeira posição;
-                if(aux->ant != NULL){
-                    novo->ant = aux->ant;
-                    aux->ant->prox = novo;
-                }
+                    //IF para verificar se o elemento não está na primeira posição;
+                    if(aux->ant != NULL){
+                        novo->ant = aux->ant;
+                        aux->ant->prox = novo;
+                    }
+
                 //Se o elemento estiver na primeira posição
                 //Atribui ele como o primeiro elemento
                 else
@@ -118,9 +127,8 @@ void inserir_elemento_meio(struct lista *lista){
                 novo->prox = aux;
                 aux->ant = novo;
 
-
-
             }
+
             //Estrutura de repetição para chegar na posição desejada
             else{
                 aux = aux->prox;
@@ -135,7 +143,14 @@ void inserir_elemento_meio(struct lista *lista){
                     break;
                 }
             }
+          }   
         }
+
+        else{
+            printf("\nPosição invalida!!");
+
+        }
+
     }
 }
 

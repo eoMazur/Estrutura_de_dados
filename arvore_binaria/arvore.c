@@ -19,11 +19,9 @@ void criaArvore(struct arvore *arv){
     }
 }
 
-void adicionaElemento(struct elemento *arv){
+void adicionaElemento(struct arvore *arv){
     struct elemento *novo = (struct elemento *) malloc(sizeof(struct arvore));
-    struct elemento *aux = (struct elemento *) malloc(sizeof(struct elemento));
-
-    aux = arv;
+    struct elemento *aux = arv->raiz;
 
     printf("Informe um número\n");
     scanf("%d", &novo->num);
@@ -53,14 +51,14 @@ void adicionaElemento(struct elemento *arv){
     }
 
     else if(aux == NULL){
-        aux = novo;
+        arv->raiz = novo;
     }
 }
 
 void imprimeArvore(struct elemento *aux){
 
         if(aux != NULL){
-            printf("%d", aux->num);
+            printf("%d\n", aux->num);
             imprimeArvore(aux->esq);
             imprimeArvore(aux->dir);
         }
@@ -84,7 +82,7 @@ int main(void)
         switch (opcao)
         {
         case 1:
-            adicionaElemento(arv.raiz);
+            adicionaElemento(&arv);
             break;
         
         case 2:

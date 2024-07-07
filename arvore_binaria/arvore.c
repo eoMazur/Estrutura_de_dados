@@ -67,6 +67,19 @@ void imprimeArvore(struct elemento *aux){
 
 }
 
+void imprimeArvoreOrdem(struct elemento *aux){
+
+        if(aux != NULL){
+            if(aux->esq != NULL){
+                imprimeArvoreOrdem(aux->esq);   
+            }
+             if(aux->dir != NULL){
+                imprimeArvoreOrdem(aux->dir);
+            }
+                printf("%d\n", aux->num);
+        }
+}
+
 int main(void)
 {
     struct arvore arv;
@@ -76,7 +89,7 @@ int main(void)
     while(1){
         int opcao = 0;
 
-        printf("Informe a operação \n 1 - Adiciona elemento \n 2 - imprime arvore\n");
+        printf("Informe a operação \n 1 - Adiciona elemento \n 2 - imprime arvore \n 3 - Imprime Pos Ordem\n");
         scanf("%d", &opcao);
 
         switch (opcao)
@@ -87,6 +100,10 @@ int main(void)
         
         case 2:
             imprimeArvore(arv.raiz);
+            break;
+
+        case 3:
+            imprimeArvoreOrdem(arv.raiz);
             break;
 
         default:
